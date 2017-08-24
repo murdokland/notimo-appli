@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>Notimo</title>
+        <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css" />
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<!-- <link rel="stylesheet" href="css/themes/notimo.css" /> -->
+  		<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+  		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" /> 
+		<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+        <!-- <script type="text/javascript" src="cordova.js"></script> -->
+	<script>
+function verif(data) {
+	data= data.replace(/''/g,"'");
+	return data;
+}
+function getParamValue(param,url)
+{
+	var u = url == undefined ? document.location.href : url;
+	var reg = new RegExp('(\\?|&|^)'+param+'=(.*?)(&|$)');
+	matches = u.match(reg);
+	//return matches[2] != undefined ? decodeURIComponent(matches[2]).replace(/\+/g,' ') : '';
+	return (matches && matches[2] != undefined) ? decodeURIComponent(matches[2]).replace(/\+/g,' ') : '';
+}
+</script>
+<script>	
+$(document).ready(function(){
+	var dep = getParamValue('dep');
+	var budgetmin = getParamValue('budgetmin');
+	var budgetmax = getParamValue('budgetmax');
+	var typeBien = getParamValue('typeBien');
+	var nbPieces = getParamValue('nbPieces');
+	var rayon = getParamValue('rayon');
+	var commune = getParamValue('commune');
+	var cp = getParamValue('cp');
+	//var cpBis = getParamValue('cpBis%5B%5D');
+	//console.log("la: "+cpBis);
+
+	function getQueryString () {
+	    var ret = {};
+	    var parts = (document.location.toString().split('?')[1]).split('&');
+	    for (var i = 0; i < parts.length; i++) {
+
+	        var p = parts[i].split('=');
+	        // so strings will be correctly parsed:
+	        p[1] = decodeURIComponent(p[1].replace(/\+/g, " "));
+
+	        if (p[0].search(/\[\]/) >= 0) { // then it's an array
+	            p[0] = p[0].replace('[]','');
+
+	            if (typeof ret[p[0]] != 'object') ret[p[0]] = [];
+	            ret[p[0]].push(p[1]);
+	        } else {
+	            ret[p[0]] = p[1];
+	        }
+	    }
+	    return ret;
+	}
+
+	var variable = getQueryString (document.location.href);
+	var link = new Array();
+	$.each(variable, function(index, value) {
+	    //console.log(index,value);
+	    if (index.includes("cpBis")){
+	    	link += (value+',');
+
+	    };	    
+	}); 
+	console.log(link);
+
+
+	var successfullStatements = $("#successfullStatements");
+	successfullStatements.append('<br><p align="center">chargement</p>');	
+	$.ajax({
+			url: 'http://notimo-appli.com/php/json_recherche.php?dep='+dep+'&budgetmin='+budgetmin+'&budgetmax='+budgetmax+'&typeBien='+typeBien+'&nbPieces='+nbPieces+'&rayon='+rayon+'&commune='+commune+'&cp='+cp+'&cpBis='+link,
+			dataType: 'jsonp',
+			jsonp: 'jsoncallback',
+			timeout: 5000,
+			success: function(data, status){
+				successfullStatements.empty();
+				if (data.length == 0) {
+					successfullStatements.append("<p style='text-align:center; font-size:18px; margin-top:20px;'>Pas de résultat</p>");
+					successfullStatements.listview("refresh");
+
+				}
+				$.each(data, function(i,item){				
+						successfullStatements.append('<li><a href="ficheBien.html?id='+item.id_bien+'" rel="external" data-transition="slide" data-icon="arrow-r" data-iconpos="right" >'+item.TitreParution+'<p class="subItem">'+item.commune+'</span></p></a></li>');	
+						$("#successfullStatements").listview("refresh");
+						console.log(status);
+				 
+				});
+			},
+			error: function(data, status){
+				console.log(data+status);				
+			}		
+		});
+
+	
+	 
+	// if (nom == 0 && ville==0 && cp==0 && cat==0 && rge==0) {
+	// 	successfullStatements.empty();
+	// 	successfullStatements.append('<br><p align="center">Merci de saisir au moins un champ</p>');	
+	// };
+	
+});
+</script>
+    </head>
+    <body>
+
+
+    	<div data-role="page" data-theme="a">
+		<div data-role="header" data-position="inline">
+			<h1></h1>
+		</div>
+		<div data-role="content" data-theme="a">
+			<div id="output">
+		        <ul id="successfullStatements" data-role="listview"></ul>
+				<ul id="errors"></ul>
+	        </div>  
+		</div>
+	</div>
+    </body>
+</html>
