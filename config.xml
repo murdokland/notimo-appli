@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Notimo</name>
+    <name>Notimo V2</name>
     <description>
        Application Phonegap
     </description>
@@ -8,5 +8,28 @@
         Les Mercenaires Associés
     </author>
     <content src="index.html" />
-    <access origin="*" />
+ 
+    <platform name="ios" />
+	<platform name="android" />
+
+	<plugin name="cordova-plugin-geolocation" />
+	<plugin name="cordova-plugin-splashscreen" />
+	<plugin name="cordova-plugin-whitelist" source="npm" />
+	<plugin name="cordova-plugin-inappbrowser" source="pgb" />
+
+	<access origin="*" />
+	
+	<allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-navigation href="data:*" />
+
+	<allow-navigation href="*"/>
+    <allow-intent href="*"/>
 </widget>
