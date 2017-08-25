@@ -15,8 +15,7 @@
 	<plugin name="cordova-plugin-geolocation" />
 	<plugin name="cordova-plugin-splashscreen" />
 	<plugin name="cordova-plugin-whitelist" source="npm" />
-	<plugin name="cordova-plugin-inappbrowser" source="pgb" />
-
+	
 	<access origin="*" />
 	
 	<allow-intent href="http://*/*" />
