@@ -246,17 +246,18 @@
 						 var diapo = ''
 							//fiche += '<img class="imglogo" src="http://btp74.com.linux.oxianet.com/btp74/images/logo/'+identifiantentreprise+item.cleentreprise+'_small.jpg" >'
 							
-							if (item.Titre.length > 0){fiche += '<h1>'+verif(item.Titre)+'</h1>'}
-							if (item.Annonce.length > 0){fiche += verif(item.Annonce)}
 							//if (item.commune.length > 0){fiche += '<br><h2>'+verif(item.cp)+' '+verif(item.commune)+'</h2>'}
-							
-							if (item.natureMaison.length > 0){fiche += '<br>Type : '+verif(item.natureMaison)}
-							
-							if ((item.aRenover.length > 0) && (item.aRenover == "true")){fiche += '<br><br>A rénover'}
+														
+							if (item.TitreParution.length > 0){fiche += '<h1>'+verif(item.TitreParution)+'</h1>'}
+							if ((item.affichePrix == 'true')&&(item.PrixSHonoAcquereur.length > 0)) {fiche += '<strong>'+item.PrixSHonoAcquereur+'€</strong><br><br>'}
 
 							//photos
-							if (item.Photo0.length > 0){fiche += '<br><br><img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo0+'" >'}
-							// if (item.Photo1.length > 0){fiche += '<br><br><a href="index.html" data-role="button">Plus de photos</a><br>'}
+							if (item.Photo0.length > 0){fiche += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo0+'" >'}
+
+							if (item.Annonce.length > 0){fiche += verif(item.Annonce)+'<br><br>'}
+							//if (item.natureMaison.length > 0){fiche += '<br>Type : '+verif(item.natureMaison)}
+							if ((item.aRenover.length > 0) && (item.aRenover == "true")){fiche += '<br><br>A rénover<br>'}
+
 							if (item.typeBien.length > 0){fiche += '<span class="title">Type de bien : </span>'+switchTypeBien(item.typeBien)+'<br>'}
 							if (item.commune.length > 0){fiche += '<span class="title">Situation : </span>'+verif(item.commune)+'('+item.departement+')'+'<br>'}
 							if (item.NbreChambre.length > 0){fiche += '<span class="title">Nombre de Chambres : </span>'+item.NbreChambre+'<br>'}
@@ -278,7 +279,7 @@
 
 							if ((item.GpsLatitudeFloue.length)&&(item.GpsLongitudeFloue.length) > 0){
 								fiche += '<li><a href="#" data-role="button" rel="external" target="_blank" onclick="window.open(\''+google_maps(item.GpsLatitudeFloue,item.GpsLongitudeFloue)+'\', \'_system\', \'location=yes\');">Localiser</a></li>'}	
-							if (item.Photo0.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo0+'" >'}
+							
 							if (item.Photo1.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo1+'" >'}
 							if (item.Photo2.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo2+'" >'}
 							if (item.Photo3.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo3+'" >'}
@@ -292,7 +293,8 @@
 							if (item.Photo11.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo11+'" >'}	
 							if (item.Photo12.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo12+'" >'}	
 							if (item.Photo13.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo13+'" >'}	
-							if (item.Photo14.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo14+'" >'}													
+							if (item.Photo14.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo14+'" >'}	
+							if (item.Photo0.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo0+'" >'}												
 										
 		  					
 
@@ -352,8 +354,7 @@
 							 
 						});
 				},
-				error: function(request, error){
-					
+				error: function(request, error){					
 					output.text('Problème avec les données.');
 					output.append('Problème avec les données.');
 					errors.append("<li>"+error.message+" Occured while processing: "+statement+"</li>");
@@ -368,14 +369,15 @@
 
     	<div data-role="page" data-theme="a">
 		<div data-role="header" data-position="inline">
+			<a href="#" data-role="button"  data-rel="back" data-icon="arrow-l" data-theme="c" data-inline="true" >Retour</a>
 			<h1></h1>
 		</div>
-		<a href="#" data-role="button"  data-rel="back" data-icon="arrow-l" data-theme="c" data-inline="true" >Retour</a>
+		
 		<div data-role="content">
-        <div id="successfullStatements_fiche" data-role="listview" ></div>
-        <div id="slides"></div>
-		<ul id="errors"></ul>
-	</div>
+	        <div id="successfullStatements_fiche" data-role="listview" ></div>
+	        <div id="slides"></div>
+			<ul id="errors"></ul>
+		</div>
 	</div>
     </body>
 </html>

@@ -133,6 +133,21 @@
       margin: 0 auto
     }
 
+
+	.ui-content{
+        padding: 5px!important;
+        padding-left:3%!important;
+        padding-right: 3%!important;
+	}​
+
+    h1 {
+        margin-bottom:0!important;
+    }
+
+
+
+
+
     /* For tablets & smart phones */
     @media (max-width: 767px) {
       body {
@@ -164,3 +179,6 @@
         width: 1170px
       }
     }
+
+
+
