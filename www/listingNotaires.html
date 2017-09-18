@@ -49,7 +49,7 @@
 						output.listview("refresh");
 					}
 					$.each(data, function(i,item){
-						var donnee =  '<li><a href="ficheBien.html?id='+item.id+'" rel="external" data-transition="slide" data-icon="arrow-r" data-iconpos="right" >'+item.etude+'<p class="subItem">'+item.Ville+'</span></p></a></li>';
+						var donnee =  '<li><a href="ficheNotaire.html?id='+item.id+'" rel="external" data-transition="slide" data-icon="arrow-r" data-iconpos="right" >'+item.etude+'<p class="subItem">'+item.Ville+'</span></p></a></li>';
 
 						output.append(donnee);
 						output.listview("refresh");
@@ -62,28 +62,15 @@
 
 
 		});
-
-
 		</script>
     </head>
     <body>
-
-
     	<div data-role="page" data-theme="a">
 		<div data-role="header" data-position="inline">
 			<a href="#" data-role="button"  data-rel="back" data-icon="arrow-l" data-theme="c" data-inline="true" >Retour</a>
 			<h1></h1>
 		</div>
 		<div data-role="content" data-theme="a">
-			<!-- <label for="slider1">Input slider:</label>
-			<input type="range" name="slider1" id="slider1" value="50" min="0" max="100" data-theme="a" />
-			<fieldset data-role="controlgroup"  data-type="horizontal" data-role="fieldcontain">
-			<legend>Cache settings:</legend>
-			<input type="radio" name="radio-choice-a1" id="radio-choice-a1" value="on" checked="checked" />
-			<label for="radio-choice-a1">On</label>
-			<input type="radio" name="radio-choice-a1" id="radio-choice-b1" value="off"  />
-			<label for="radio-choice-b1">Off</label>
-			</fieldset> -->
 			<div id="output">
 		        <ul id="successfullStatements" data-role="listview"></ul>
 				<ul id="errors"></ul>
