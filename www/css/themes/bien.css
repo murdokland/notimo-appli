@@ -182,3 +182,13 @@
 
 
 
+div#successfullStatements_fiche {
+    padding: 5px!important;
+    padding-left: 3%!important;
+    padding-right: 3%!important;
+}
+
+  h1 {
+    font-size: 1.3em
+}
+
