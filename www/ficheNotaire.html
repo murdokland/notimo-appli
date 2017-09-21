@@ -37,6 +37,12 @@
 			matches = u.match(reg);
 			return matches[2] != undefined ? decodeURIComponent(matches[2]).replace(/\+/g,' ') : '';
 		}
+
+		function espace_adresse(data) {
+			data= data.replace("'","+");
+			data= data.replace(/ /g, '+');
+			return data;
+		};
 		
 		function espace_tel(letel) {
 			letel= letel.replace(/ /g,"");
@@ -83,15 +89,21 @@
 		    return txt.value;
 		}
 
-		function google_maps(GpsLatitudeFloue,GpsLongitudeFloue){
+		function google_maps(Adresse,CP){
 			//adresse_final = "http://maps.google.com/maps?q=";
+<<<<<<< HEAD
 			//adresse_final = "http://maps.google.com/?q=";
 			//adresse_final = "http://maps.google.com/?daddr="; // Apple
 			adresse_final = "maps://?q="; // Apple
 
+=======
+			//adresse_final = "http://maps.google.com/?q="; //android
+			//adresse_final = "http://maps.google.com/?daddr="; // Apple
+			adresse_final = "maps://?q="; // Apple
+>>>>>>> refs/remotes/origin/master
 
-			adresse_final += GpsLatitudeFloue+"+"+GpsLongitudeFloue;
-			console.log (GpsLatitudeFloue+"+"+GpsLongitudeFloue)
+			adresse_final += espace_adresse(Adresse)+"+"+CP;
+			console.log (adresse_final);
 			return adresse_final; 
 			 
 		}
