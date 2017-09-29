@@ -263,7 +263,7 @@
 							if ((item.aRenover.length > 0) && (item.aRenover == "true")){fiche += '<br><br>A rénover<br>'}
 
 							if (item.typeBien.length > 0){fiche += '<span class="title">Type de bien : </span>'+switchTypeBien(item.typeBien)+'<br>'}
-							if (item.commune.length > 0){fiche += '<span class="title">Situation : </span>'+verif(item.commune)+'('+item.departement+')'+'<br>'}
+							if (item.commune.length > 0){fiche += '<span class="title">Situation : </span>'+verif(item.commune)+' ('+item.cp+')'+'<br>'}
 							if (item.NbreChambre.length > 0){fiche += '<span class="title">Nombre de Chambres : </span>'+item.NbreChambre+'<br>'}
 							if (item.NbrePiece.length > 0){fiche += '<span class="title">Nombre de Pièces : </span>'+item.NbrePiece+'<br>'}
 							if (item.SurfaceHabitable.length > 0){fiche += '<span class="title">Surface Habitable : </span>'+item.SurfaceHabitable+' m²<br>'}	

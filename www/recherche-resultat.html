@@ -95,7 +95,7 @@ $(document).ready(function(){
 
 				}
 				$.each(data, function(i,item){				
-						successfullStatements.append('<li><a href="ficheBien.html?id='+item.id_bien+'" rel="external" data-transition="slide" data-icon="arrow-r" data-iconpos="right" >'+item.TitreParution+'<p class="subItem">'+item.commune+'</span></p></a></li>');	
+						successfullStatements.append('<li><a href="ficheBien.html?id='+item.id_bien+'" rel="external" data-transition="slide" data-icon="arrow-r" data-iconpos="right" >'+item.TitreParution+'<p class="subItem">'+item.commune+' ('+item.cp+')</span></p></a></li>');	
 						$("#successfullStatements").listview("refresh");
 						console.log(status);
 				 
