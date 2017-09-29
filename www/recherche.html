@@ -47,18 +47,30 @@
         $('#commune').autocomplete({
             source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
                 $.ajax({
-                        url : 'http://ws.geonames.org/searchJSON', // on appelle le script JSON
+                        url : 'http://api.geonames.org/searchJSON', // on appelle le script JSON
                         dataType : 'json', // on spécifie bien que le type de données est en JSON
                         data : {
                             username: "mercenaires",
                             name_startsWith : $('#commune').val(), // on donne la chaîne de caractère tapée dans le champ de recherche
+                            featureClass: "P",
+                            //style: "full",
                             maxRows : 10,
-                            country : "FR"
+                            country : "FR",
+                            lang : "fr",
+                            adminName1 : "Bourgogne-Franche-Comté"
+                            //,Doubs,Jura
                         },
                         
                         success : function(donnee){
                             reponse($.map(donnee.geonames, function(objet){
-                                return objet.name // on retourne cette forme de suggestion
+                                //return objet.name // on retourne cette forme de suggestion
+
+                                return {
+                                    label: objet.name + (objet.adminName1 ? ", " + objet.adminName1 : ""),
+                                    value: objet.name
+                                }
+                                //return objet.name + ', ' + objet.adminCode2; // on retourne cette forme de suggestion
+                                //return objet.name + ',(' + objet.Admin2 +')';
                             }));
                         }
                     });
@@ -127,65 +139,62 @@
 			<h1></h1>
 		</div>
 		<div data-role="content" data-theme="a">
-			 Saisissez au moins un champ:<br>
+			 Saisissez au moins un champ de votre recherche :
 
-          <div id="infoposition"></div><br>
+          <div id="infoposition"></div>
 
 		  <div data-role="fieldcontain">
 	      	<form action="recherche-resultat.html" data-ajax="false" method="get">
-	       		<fieldset> 
-	            
-			    <input type="text" name="commune" id="commune" placeholder="commune" />
-                <!-- <input type="text" name="commune" id="commune" placeholder="commune" /><br> -->
+	       		<fieldset>
+    			    <input type="text" name="commune" id="commune" placeholder="commune" />
+                    <!-- <input type="text" name="commune" id="commune" placeholder="commune" /><br> -->
 
-                <label for="rayon">Rayon de recherche en km:</label>
-                <input type="range" name="rayon" id="rayon" value="0" min="0" max="40" />
-                <br>
-               
-                <label for="cp"> ou par : </label>
-                <input type="text" name="cp" id="cp" placeholder="Code Postal" /><br>
-                
-                <div id="resultatCP"></div>
-                <br>
+                    <label for="rayon">Rayon de recherche en km:</label>
+                    <input type="range" name="rayon" id="rayon" value="0" min="0" max="40" />
+                    <br>
+                   
+                    <label for="cp">ou par : </label>
+                    <input type="text" name="cp" id="cp" placeholder="Code Postal" /><br>
+                    
+                    <div id="resultatCP"></div>
+                    
+    	            <label for="dep" class="select"><strong>Département : </strong></label>	
+                    <select name="dep" id="dep" class="select" >
+    					<option value="" >Tous...</option>
+    					<option value="25" >Doubs (25)</option>
+    					<option value="39" >Jura (39)</option>
+    					<option value="70" >Haute-Saône (70)</option>
+    					<option value="90" >Territoire de Belfort (90)</option>
+                    </select>
+    	            <br>
+    				<label for="budgetmin" class="select"><strong>Budget : </strong></label>	
+    	            <input type="text" name="budgetmin" id="budgetmin" value="" placeholder="Budget min" />
+    	            <input type="text" name="budgetmax" id="budgetmax" value="" placeholder="Budget max" />
 
-	        <label for="dep" class="select"><strong>Département : </strong></label>	
-                <select name="dep" id="dep" class="select" >
-					<option value="" >Tous...</option>
-					<option value="25" >Doubs (25)</option>
-					<option value="39" >Jura (39)</option>
-					<option value="70" >Haute-Saône (70)</option>
-					<option value="90" >Territoire de Belfort (90)</option>
-                </select>
-	            <br>
-				<label for="budgetmin" class="select"><strong>Budget : </strong></label>	
-	            <input type="text" name="budgetmin" id="budgetmin" value="" placeholder="Budget min" />
-	            <input type="text" name="budgetmax" id="budgetmax" value="" placeholder="Budget max" />
-
-	            <br><br>
-	            
-	           
-				<label for="typeBien" class="select"><strong>Choisissez une type de bien:</strong> </label>
-				<select name="typeBien" id="typeBien" data-native-menu="false" >                                     	
-                 	<option value="" >Tous...</option>                 	
-                 	<option value="APPT" >Appartement</option><option value="MAIS" >Maison</option><option value="BAGR" >Terrain Agricole</option><option value="TEBA" >Terrain à Bâtir</option><option value="IMMR" >Immeuble</option><option value="GARA" >Garage</option><option value="PARK" >Parking</option><option value="FDCO" >Fond de Commerce</option><option value="LOCP" >Locaux professionnels</option><option value="BURE" >Bureaux</option><option value="PROV" >Bien Viticole</option><option value="DIVE" >Locaux divers</option> 
-                </select>
-                                    
-                <br>
-					
-				<label for="nbPieces" class="select"><strong>Nombre de pièce : </strong></label>	
-                <select name="nbPieces" id="nbPieces" class="select" data-inline="true">
-					<option value="" >Tous...</option>
-					<option value="1" >1</option>
-					<option value="2" >2</option>
-					<option value="3" >3</option>
-					<option value="4" >4</option>
-					<option value="5" >5</option>
-					<option value="6" >6</option>
-					<option value="7" >7 et plus</option>
-                </select>
-	            <br><br>
-	            
-	            <input type="submit" value="Validez" data-inline="true" />
+    	            <br>	            
+    	           
+    				<label for="typeBien" class="select"><strong>Choisissez une type de bien:</strong> </label>
+    				<select name="typeBien" id="typeBien" data-native-menu="false" >                                     	
+                     	<option value="" >Tous...</option>                 	
+                     	<option value="APPT" >Appartement</option><option value="MAIS" >Maison</option><option value="BAGR" >Terrain Agricole</option><option value="TEBA" >Terrain à Bâtir</option><option value="IMMR" >Immeuble</option><option value="GARA" >Garage</option><option value="PARK" >Parking</option><option value="FDCO" >Fond de Commerce</option><option value="LOCP" >Locaux professionnels</option><option value="BURE" >Bureaux</option><option value="PROV" >Bien Viticole</option><option value="DIVE" >Locaux divers</option> 
+                    </select>
+                                        
+                    <br>
+    					
+    				<label for="nbPieces" class="select"><strong>Nombre de pièce : </strong></label>	
+                    <select name="nbPieces" id="nbPieces" class="select" data-inline="true">
+    					<option value="" >Tous...</option>
+    					<option value="1" >1</option>
+    					<option value="2" >2</option>
+    					<option value="3" >3</option>
+    					<option value="4" >4</option>
+    					<option value="5" >5</option>
+    					<option value="6" >6</option>
+    					<option value="7" >7 et plus</option>
+                    </select>
+    	            <br><br>
+    	            
+    	            <input type="submit" value="Validez" data-inline="true" />
 				</fieldset>
          	</form>
         	

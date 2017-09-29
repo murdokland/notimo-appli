@@ -89,10 +89,11 @@
 		    return txt.value;
 		}
 
-		function google_maps(Adresse,CP){
+		function googlemaps(Adresse,CP){
 			//adresse_final = "http://maps.google.com/maps?q=";
-			adresse_final = "http://maps.google.com/?q="; //android
 			//adresse_final = "http://maps.google.com/?daddr="; // Apple
+
+			adresse_final = "http://maps.google.com/?q="; //android
 			//adresse_final = "maps://?q="; // Apple
 
 			adresse_final += espace_adresse(Adresse)+"+"+CP;
@@ -156,9 +157,16 @@
 						Ville = item.Ville
 						if ((item.Departement.length > 0)&&(item.Departement != Departement )){fiche += verif(item.Departement)+'<br>'}
 						Departement = item.Departement
-
-						if ((item.Adresse.length)&&(item.CP.length) > 0){
-								fiche += '<a href="#" data-role="button" rel="external" data-inline="true" target="_blank" onclick="window.open(\''+google_maps(item.Adresse,item.CP)+'\', \'_system\', \'location=yes\');">Localiser</a>'}
+						if (item.google_maps.length == 0) {
+							if ((item.Adresse.length)&&(item.CP.length) > 0){
+								fiche += '<a href="#" data-role="button" rel="external" data-inline="true" target="_blank" onclick="window.open(\''+googlemaps(item.Adresse,item.CP)+'\', \'_system\', \'location=yes\');">Localiser</a>'
+							}
+						}
+						if (item.google_maps.length > 0) {
+							if ((item.google_maps.length)&&(item.CP.length) > 0){
+								fiche += '<a href="#" data-role="button" rel="external" data-inline="true" target="_blank" onclick="window.open(\''+googlemaps(item.google_maps,item.CP)+'\', \'_system\', \'location=yes\');">Localiser</a>'
+							}
+						}
 
 
 						if ((item.tel_etude.length > 0)&&(item.tel_etude != tel_etude )){fiche += '<a href="tel:'+espace_tel(item.tel_etude)+'" data-role="button" rel="external" target="_blank" data-inline="true">'+verif(item.tel_etude)+'</a><br><br>'}
