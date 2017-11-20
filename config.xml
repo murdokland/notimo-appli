@@ -4,7 +4,7 @@
 	id="GY86BP8AU6.com.lesmercenaires.notimo" 
 	version="1.5.0" 
 	versionCode = "330">
-	
+
     <name>Notimo</name>
     <description>
        Application Notimo
@@ -37,8 +37,7 @@
 	<allow-navigation href="*"/>
     <allow-intent href="*"/>
 
-    <splash src="splash.png" />
-	<icon src="icon.png" />
+    
 
 	<platform name="android">
 		<icon density="ldpi" src="res/icons/android/drawable-ldpi-icon.png" />
@@ -59,6 +58,8 @@
 		<splash density="port-xhdpi" src="res/screens/android/drawable-port-xhdpi-screen.png" />
 		<splash density="port-xxhdpi" src="res/screens/android/drawable-port-xxhdpi-screen.png" />
 		<splash density="port-xxxhdpi" src="res/screens/android/drawable-port-xxxhdpi-screen.png" />
+		<splash src="splash.png" />
+		<icon src="icon.png" />
 	</platform>
 	<platform name="ios">
 		<icon height="57" platform="ios" src="res/icons/ios/icon.png" width="57" />
@@ -87,6 +88,8 @@
 		<splash height="1024" platform="ios" src="res/screens/ios/Default-Portrait~ipad.png" width="768" />
 		<splash height="960" platform="ios" src="res/screens/ios/Default@2x~iphone.png" width="640" />
 		<splash height="480" platform="ios" src="res/screens/ios/Default~iphone.png" width="320" />
+		<splash src="splash.png" />
+		<icon src="icon.png" />
 	</platform>
 </widget>
 <!--- id="GY86BP8AU6.com.lesmercenaires.notimo" -->
