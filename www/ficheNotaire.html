@@ -46,6 +46,7 @@
 		
 		function espace_tel(letel) {
 			letel= letel.replace(/ /g,"");
+			letel= letel.replace(/\./g,"");
 			return letel;
 		}
 		function test_zone(adresse){

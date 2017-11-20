@@ -10,8 +10,13 @@
 		<link rel="stylesheet" href="css/themes/bien.css" />
   		<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
   		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" /> 
+
+		<link rel="stylesheet" type="text/css" href="js/slick.css"/>
+		<link rel="stylesheet" type="text/css" href="js/slick-theme.css"/>
+
 		<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
-		<script src="js/jquery.slides.min.js"></script>
+	<!-- 	<script src="js/jquery.slides.js"></script> -->
+		<script type="text/javascript" src="js/slick.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
 
 	
@@ -38,19 +43,10 @@
 			return matches[2] != undefined ? decodeURIComponent(matches[2]).replace(/\+/g,' ') : '';
 		}
 		
-		// function check_image_dirigeant(cat){
-		// 	$(".imgdirigeant").error(function () {
-		// 	  $(this).unbind("error").attr("src", "images/dirigeant/cat"+cat+"_erreur.jpg");
-		// 	});
-		// };
-		// function check_image_logo(){
-		// 	$(".imglogo").error(function () {
-		// 	  $(this).unbind("error").attr("src", "images/logo/cat_erreur.jpg");
-		// 	});
-		// };
 
 		function espace_tel(letel) {
 			letel= letel.replace(/ /g,"");
+			letel= letel.replace(/\./g,"");
 			return letel;
 		}
 		function test_zone(adresse){
@@ -227,12 +223,18 @@
 			};
 		}
 
+
+		// function CalculPrix(PrixSHonoAcquereur,PourcentHonoTCC){
+		// 	var PriceMoinsHono = (PrixSHonoAcquereur*PourcentHonoTCC)/100;
+		// 	return PriceMoinsHono;
+		// }
+
 		$(document).ready(function(){
 
 			var id = getParamValue('id');		
 			console.log(parseInt(id));	
 		    var output = $("#successfullStatements_fiche");
-		    var slides = $("#slides");
+		    var slides2 = $("#slides2");
 			var successfullStatements = $("#successfullStatements_fiche"),
 				errors = $("#errors")
 			successfullStatements.append('<br><p align="center">chargement</p>');	
@@ -253,7 +255,12 @@
 							//if (item.commune.length > 0){fiche += '<br><h2>'+verif(item.cp)+' '+verif(item.commune)+'</h2>'}
 														
 							if (item.TitreParution.length > 0){fiche += '<h1>'+verif(item.TitreParution)+'</h1>'}
-							if ((item.affichePrix == 'true')&&(item.PrixSHonoAcquereur.length > 0)) {fiche += '<strong>'+item.PrixSHonoAcquereur+'€</strong><br><br>'}
+							
+							//if ((item.affichePrix == 'true')&&(item.PrixSHonoAcquereur.length > 0)) {fiche += '<strong>'+item.PrixSHonoAcquereur+'€</strong><br><br>'}
+
+							if ((item.affichePrix == 'true')&&(item.HonoChargeAcquereur == 'false')) {fiche += 'Prix de vente : <strong>'+item.PrixSHonoAcquereur+'€</strong><br>Honoraire de négociation charge vendeur<br><br>'}
+
+							if((item.affichePrix == 'true')&& (item.HonoChargeAcquereur == 'true'))  {fiche += 'Prix de vente : <strong>'+item.PVB+'€</strong><br>Dont honoraire de négociation TTC, charge acquéreur : <br> '+item.fraisNego+'€ (soit '+item.PourcentHonoTCC+'% du prix hors honoraire) <br> Prix hors honoraire : <strong>'+item.PNV+'€</strong><br><br>'}
 
 							//photos
 							if (item.Photo0.length > 0){fiche += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo0+'" >'}
@@ -267,6 +274,8 @@
 							if (item.NbreChambre.length > 0){fiche += '<span class="title">Nombre de Chambres : </span>'+item.NbreChambre+'<br>'}
 							if (item.NbrePiece.length > 0){fiche += '<span class="title">Nombre de Pièces : </span>'+item.NbrePiece+'<br>'}
 							if (item.SurfaceHabitable.length > 0){fiche += '<span class="title">Surface Habitable : </span>'+item.SurfaceHabitable+' m²<br>'}	
+							if (item.SurfaceTerrain.length > 0){fiche += '<span class="title">Superficie : </span>'+item.SurfaceTerrain+'<br>'}	
+								
 							//if (item.SurfaceHabitable.length > 0){fiche += '<span class="title">Ancien / Neuf : </span>'+item.SurfaceHabitable+'<br>'}
 							// Etat : Neuf
 							if (item.DpeNrj.length > 0){fiche += '<span class="title">Classification DPE : </span>'+calculDpe(item.DpeNrj)+'<br>'}
@@ -280,32 +289,59 @@
 							if (item.etage.length > 0){fiche += '<span class="title">Etage : </span>'+ item.etage+'<br>'}
 							// Cuisine Equipée : 
 							if (item.piscine.length > 0){fiche += '<span class="title">Piscine : </span>'+ trueFalse(item.piscine)+'<br>'}
+							if (item.charges.length > 0){fiche += '<span class="title">Charges : </span>'+ item.charges+'€<br>'}
 
 							if ((item.GpsLatitudeFloue.length)&&(item.GpsLongitudeFloue.length) > 0){
 								fiche += '<li><a href="#" data-role="button" rel="external" target="_blank" onclick="window.open(\''+google_maps(item.GpsLatitudeFloue,item.GpsLongitudeFloue)+'\', \'_system\', \'location=yes\');">Localiser</a></li>'}	
 							
-							if (item.Photo1.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo1+'" >'}
-							if (item.Photo2.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo2+'" >'}
-							if (item.Photo3.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo3+'" >'}
-							if (item.Photo4.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo4+'" >'}			
-							if (item.Photo5.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo5+'" >'}	
-							if (item.Photo6.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo6+'" >'}	
-							if (item.Photo7.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo7+'" >'}	
-							if (item.Photo8.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo8+'" >'}	
-							if (item.Photo9.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo9+'" >'}	
-							if (item.Photo10.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo10+'" >'}	
-							if (item.Photo11.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo11+'" >'}	
-							if (item.Photo12.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo12+'" >'}	
-							if (item.Photo13.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo13+'" >'}	
-							if (item.Photo14.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo14+'" >'}	
-							if (item.Photo0.length > 0){diapo += '<img class="photoBien" src="http://notimo-appli.com/data/'+item.Photo0+'" >'}												
+							// if (item.Photo1.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo1+'" >'}
+							// if (item.Photo2.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo2+'" >'}
+							// if (item.Photo3.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo3+'" >'}
+							// if (item.Photo4.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo4+'" >'}			
+							// if (item.Photo5.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo5+'" >'}	
+							// if (item.Photo6.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo6+'" >'}	
+							// if (item.Photo7.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo7+'" >'}	
+							// if (item.Photo8.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo8+'" >'}	
+							// if (item.Photo9.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo9+'" >'}	
+							// if (item.Photo10.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo10+'" >'}	
+							// if (item.Photo11.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo11+'" >'}	
+							// if (item.Photo12.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo12+'" >'}	
+							// if (item.Photo13.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo13+'" >'}	
+							// if (item.Photo14.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo14+'" >'}	
+							// if (item.Photo0.length > 0){diapo += '<img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo0+'" >'}									
+
+
+							
+
+							if (item.Photo1.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo1+'" ></div>'}
+							if (item.Photo2.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo2+'" ></div>'}
+							if (item.Photo3.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo3+'" ></div>'}
+							if (item.Photo4.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo4+'" ></div>'}			
+							if (item.Photo5.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo5+'" ></div>'}	
+							if (item.Photo6.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo6+'" ></div>'}	
+							if (item.Photo7.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo7+'" ></div>'}	
+							if (item.Photo8.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo8+'" ></div>'}	
+							if (item.Photo9.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo9+'" ></div>'}	
+							if (item.Photo10.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo10+'" ></div>'}	
+							if (item.Photo11.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo11+'" ></div>'}	
+							if (item.Photo12.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo12+'" ></div>'}	
+							if (item.Photo13.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo13+'" ></div>'}	
+							if (item.Photo14.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo14+'" ></div>'}	
+							if (item.Photo0.length > 0){diapo += '<div><img class="photoBienSlide" src="http://notimo-appli.com/data/'+item.Photo0+'" ></div>'}		
+
+							
+
+								
 												  					
 							if (item.nomNotaire.length > 0){fiche += '<h1>Contact : </h1>'}
 							if (item.nomNotaire.length > 0){fiche += verif(item.nomNotaire)+'<br>'}
 							if (item.adresseNotaire.length > 0){fiche += verif(item.adresseNotaire)+'<br>'}
 							if (item.codpostNotaire.length > 0){fiche += verif(item.codpostNotaire)+' '}
-							if (item.villeNotaire.length > 0){fiche += verif(item.villeNotaire)+'<br>'}
-							if (item.emailServiceNego.length > 0){fiche += '<a href="mailto:'+verif(item.emailServiceNego)+'" data-role="button" rel="external" target="_blank" data-inline="true">'+verif(item.emailServiceNego)+'</a><br>'}
+							if (item.villeNotaire.length > 0){fiche += verif(item.villeNotaire)+'<br><br>'}
+							if (item.negoPrenom.length > 0){fiche += verif(item.negoPrenom)+' '}
+							if (item.negoNom.length > 0){fiche += verif(item.negoNom)+'<br>'}
+							if (item.negoEmail.length > 0){fiche += '<a href="mailto:'+verif(item.negoEmail)+'?subject='+item.refClient+'" data-role="button" rel="external" target="_blank" data-inline="true">'+verif(item.negoEmail)+'</a><br>'}
+							if (item.tel.length > 0){fiche += '<a href="tel:'+espace_tel(item.tel)+'" data-role="button" rel="external" target="_blank" data-inline="true">'+verif(item.tel)+'</a><br><br>'}
 						
 							// if (item.codepostalsiege.length > 0){fiche += '<p>'+item.codepostalsiege+' <strong>'+verif(item.villesiege)+'</strong></p><br>'}
 							
@@ -335,24 +371,36 @@
 							// if (item.effectif.length > 0){fiche += '<br><div id="cadre2"><p class="color">Effectif: </p></div><div id="effectif">'+effectif(item.effectif)+'<div>'}; 
 							
 						successfullStatements.append(fiche);
-						slides.append(diapo);
-						$(function(){
-			      		$("#slides").slidesjs({
-			        			width: 940,
-			        			height: 528,
-			        			 play: {
-						          active: true,
-						          auto: true,
-						          interval: 4000,
-						          swap: true
-						        }
-			      			});
-			    		});
+						slides2.append(diapo);
+						// $(function(){
+				  //     		$("#slides").slidesjs({
+				  //       			width: 940,
+				  //       			height: 940,
+				  //       			play: {
+						// 	          	active: true,
+						// 	          	auto: true,
+						// 	          	interval: 4000,
+						// 	          	swap: true
+						// 	        }
+				  //     		});
+			   //  		});
 
 
-						 //changecss(cat);	
-						 output.listview("refresh");
-						 $('#successfullStatements_fiche a[data-role=button]').button();
+
+						//changecss(cat);	
+						output.listview("refresh");
+						$('#successfullStatements_fiche a[data-role=button]').button();
+						$(document).ready(function(){
+							$('.slides2').slick({
+							  autoplay: true,
+							  autoplaySpeed: 4000,							  
+							  dots: true,
+							  arrows: false,
+						      slidesToShow: 1,
+						      adaptiveHeight: true					 
+							  
+						  });
+						});
 						 //check_image_dirigeant(cat);
 						 //check_image_logo();
 
@@ -385,7 +433,7 @@
 		
 		<div data-role="content">
 	        <div id="successfullStatements_fiche" data-role="listview" ></div>
-	        <div id="slides"></div>
+	        <div id="slides2" class="slides2"></div>
 			<ul id="errors"></ul>
 		</div>
 	</div>
