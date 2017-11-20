@@ -1,7 +1,8 @@
+<!--- id="GY86BP8AU6.com.lesmercenaires.notimo" -->
 <?xml version='1.0' encoding='utf-8'?>
 <widget xmlns="http://www.w3.org/ns/widgets"
 	xmlns:gap="http://phonegap.com/ns/1.0"
-	id="com.lesmercenaires.notimo" 
+	id="GY86BP8AU6.com.lesmercenaires.notimo" 
 	
 	version="1.5.0" 
 	versionCode = "330">
@@ -36,6 +37,9 @@
 
 	<allow-navigation href="*"/>
     <allow-intent href="*"/>
+
+    <splash src="splash.png" />
+	<icon src="icon.png" />
 
 	<platform name="android">
 		<icon density="ldpi" src="res/icons/android/drawable-ldpi-icon.png" />
@@ -87,4 +91,3 @@
 	</platform>
 </widget>
 
-<!--- id="GY86BP8AU6.com.lesmercenaires.notimo" -->

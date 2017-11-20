@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Notimo V2</name>
+<widget id="com.lesmercenaires.notimo" version="1.5.0" versionCode="330" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Notimo</name>
     <description>
        Application Notimo
     </description>
@@ -20,4 +20,6 @@
     <allow-navigation href="data:*" />
     <allow-navigation href="*" />
     <allow-intent href="*" />
+    <splash src="splash.png" />
+    <icon src="icon.png" />
 </widget>

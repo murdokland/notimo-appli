@@ -11,6 +11,15 @@
   		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" /> 
 		<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
         <!-- <script type="text/javascript" src="cordova.js"></script> -->
+        <style type="text/css">
+        	a.ui-btn.ui-btn-icon-right.ui-icon-carat-r {
+			    white-space: normal!important;
+			}
+
+			.ui-listview>.ui-li-static, .ui-listview>.ui-li-divider, .ui-listview>li>a.ui-btn{
+			    white-space: normal!important;
+			}
+        </style>
 	<script>
 function verif(data) {
 	data= data.replace(/''/g,"'");
@@ -86,7 +95,7 @@ $(document).ready(function(){
 
 				}
 				$.each(data, function(i,item){				
-						successfullStatements.append('<li><a href="ficheBien.html?id='+item.id_bien+'" rel="external" data-transition="slide" data-icon="arrow-r" data-iconpos="right" >'+item.TitreParution+'<p class="subItem">'+item.commune+'</span></p></a></li>');	
+						successfullStatements.append('<li><a href="ficheBien.html?id='+item.id_bien+'" rel="external" data-transition="slide" data-icon="arrow-r" data-iconpos="right" >'+item.TitreParution+'<p class="subItem">'+item.commune+' ('+item.cp+')</span></p></a></li>');	
 						$("#successfullStatements").listview("refresh");
 						console.log(status);
 				 
