@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>Notimo</title>
+        <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css" />
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<!-- <link rel="stylesheet" href="css/themes/notimo.css" /> -->
+  		<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+  		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" /> 
+		<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+        <!-- <script type="text/javascript" src="cordova.js"></script> -->
+        <style type="text/css">
+        	h1 {
+				font-size: 1.3em;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				color: #008ae1;
+			}
+
+        </style>
+
+    </head>
+    <body>
+
+
+    	<div data-role="page" data-theme="a">
+		<div data-role="header" data-position="inline">
+			<a href="#" data-role="button"  data-rel="back" data-icon="arrow-l" data-theme="c" data-inline="true" >Retour</a>
+			
+		</div>
+		<div data-role="content" data-theme="a">
+			<h1>Annuaire des notaires du groupement </h1>
+			<div id="output">
+		        <ul id="successfullStatements" data-role="listview">
+		        	<li><a href="listingNotaires.html?dep=25" data-ajax="false">Doubs (25)</a></li>
+		        	<li><a href="listingNotaires.html?dep=39" data-ajax="false">Jura (39)</a></li>
+		        	<li><a href="listingNotaires.html?dep=70" data-ajax="false">Haute-Saône (70)</a></li>
+		        	<!-- <li><a href="listingNotaires.html?dep=90" data-ajax="false">Territoire de Belfort (90)</a></li> -->
+		        </ul>
+	        </div>   
+		</div>
+	</div>
+    </body>
+</html>

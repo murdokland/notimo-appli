@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.lesmercenaires.notimo" version="1.5.0" versionCode="330" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Notimo</name>
+    <description>
+       Application Notimo
+    </description>
+    <author email="info@lesmercenaires.com" href="http://www.lesmercenaires.com">
+        Les Mercenaires Associés
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-navigation href="data:*" />
+    <allow-navigation href="*" />
+    <allow-intent href="*" />
+    <splash src="splash.png" />
+    <icon src="icon.png" />
+</widget>

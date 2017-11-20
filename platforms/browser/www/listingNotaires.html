@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>Notimo</title>
+        <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css" />
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<!-- <link rel="stylesheet" href="css/themes/notimo.css" /> -->
+  		<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+  		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" /> 
+		<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+        <!-- <script type="text/javascript" src="cordova.js"></script> -->
+
+		<style type="text/css">
+			a.ui-btn.ui-btn-icon-right.ui-icon-carat-r {
+			    white-space: normal;
+			}
+		</style>
+		<script>
+		function getParamValue(param,url)
+		{
+			var u = url == undefined ? document.location.href : url;
+			var reg = new RegExp('(\\?|&|^)'+param+'=(.*?)(&|$)');
+			matches = u.match(reg);
+			return matches[2] != undefined ? decodeURIComponent(matches[2]).replace(/\+/g,' ') : '';
+		}
+		function verif(data) {
+			data= data.replace(/''/g,"'");
+			return data;
+		}
+
+		$(document).ready(function(){
+			var dep = getParamValue('dep');
+			var output = $("#successfullStatements");
+			var successfullStatements = $("#successfullStatements"),
+				errors = $("#errors");
+
+			successfullStatements.append('<br><p align="center">chargement</p>');	
+			//rowsArray.sort(function() {return 0.5 - Math.random()});
+			//var url = 'http://btp74-appli.fr/btp74/v2/listing.php?cat='+cat;
+			//console.log(url);
+
+			$.ajax({
+				url: 'http://notimo-appli.com/php/listingNotaires.php?dep='+dep,
+				dataType: 'jsonp',
+				jsonp: 'jsoncallback',
+				timeout: 10000,
+				success: function(data, status){
+					output.empty();
+					if (data.length == 0) {
+						output.append("<p style='text-align:center; font-size:18px; margin-top:20px;'>Pas de résultat</p>");
+						output.listview("refresh");
+					}
+					$.each(data, function(i,item){
+						var donnee =  '<li><a href="ficheNotaire.html?id='+item.id+'" rel="external" data-transition="slide" data-icon="arrow-r" data-iconpos="right" >'+item.etude+'<p class="subItem">'+item.Ville+'</span></p></a></li>';
+
+						output.append(donnee);
+						output.listview("refresh");
+					});
+				},
+				error: function(request, error){
+					output.text("Problème avec les données : "+JSON.stringify(request,null,2));
+				}
+			});
+
+
+		});
+		</script>
+    </head>
+    <body>
+    	<div data-role="page" data-theme="a">
+		<div data-role="header" data-position="inline">
+			<a href="#" data-role="button"  data-rel="back" data-icon="arrow-l" data-theme="c" data-inline="true" >Retour</a>
+			<h1></h1>
+		</div>
+		<div data-role="content" data-theme="a">
+			<div id="output">
+		        <ul id="successfullStatements" data-role="listview"></ul>
+				<ul id="errors"></ul>
+	        </div>   
+		</div>
+	</div>
+    </body>
+</html>
