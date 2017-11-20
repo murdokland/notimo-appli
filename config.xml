@@ -2,9 +2,9 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
 	xmlns:gap="http://phonegap.com/ns/1.0"
 	id="GY86BP8AU6.com.lesmercenaires.notimo" 
-	
 	version="1.5.0" 
 	versionCode = "330">
+	
     <name>Notimo</name>
     <description>
        Application Notimo
