@@ -3,10 +3,6 @@
 	/*width: 200px;*/
 }
 
-.container {
-  width: 100%;
-}
-
 .title {
 	color: #213eaf;
 }
@@ -21,7 +17,7 @@
     }
 
     #slides {
-      /*display: none*/
+      display: none
     }
 
     #slides .slidesjs-navigation {
@@ -126,8 +122,10 @@
     }
 
 
+
+
     #slides {
-     /* display: none;*/
+      display: none;
       margin-top: 20px;
     }
 
@@ -194,12 +192,3 @@ div#successfullStatements_fiche {
     font-size: 1.3em
 }
 
-img.photoBienSlide {
-    max-width: 100%;
-}
-
-div#slides2 {
-    margin-top: 35px;
-   /* padding-left: 6px;
-    padding-right: 6px;*/
-}
